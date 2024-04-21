@@ -11,7 +11,7 @@ export default function Tweets(props) {
     const [pub, setPub] = props.tweets;
     const pub_reverse = pub;
     pub_reverse.reverse();
-    const [summaries, setSummaries] = useState(new Array(pub.length).fill(""));
+    const [showSummary, setShow] = useState(new Array(pub.length).fill(0));
     const [bios, setBios] = useState(new Array(pub.length).fill(""));
 
     const Rectangle = styled(Paper)(({ theme }) => ({
@@ -36,26 +36,6 @@ export default function Tweets(props) {
         color: theme.palette.text.primary,
         lineHeight: '30px',
     }));
-
-    async function getSummary(batch_id) {
-        let payload = {};
-        payload["batch"] = batch_id;
-        payload["tweet_id"] = tweet_id;
-        fetch("http://127.0.0.1:5000/summarize-thread", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-            },
-            body: JSON.stringify(payload),
-        })
-            .then(response => response.json())
-            .then(data => {
-                let new_summaries = summaries;
-                new_summaries[batch_id] = data["summary"];
-                setSummaries(new_summaries);
-            })
-    }
 
     async function getBios(batch_id) {
         let payload = {};
@@ -86,6 +66,8 @@ export default function Tweets(props) {
             getBios(batch.batch);
         }
     }, [])
+
+    console.log(showSummary);
 
     return (
         <>
@@ -133,7 +115,11 @@ export default function Tweets(props) {
                                                                     <Grid item xs={2}>
                                                                         <IconButton
                                                                             sx={{ width: 40, height: 40, color: "#04bb7b" }}
-                                                                            onClick={() => { getSummary(batch.batch) }}>
+                                                                            onClick={() => { 
+                                                                                let summaries = showSummary;
+                                                                                summaries[batch.batch] = Math.abs(summaries[batch.batch] - 1);
+                                                                                setShow(summaries);
+                                                                            }}>
                                                                             <TelegramIcon sx={{ width: '100%', height: '100%' }} />
                                                                         </IconButton>
                                                                     </Grid>
@@ -141,11 +127,13 @@ export default function Tweets(props) {
                                                             </Option>
                                                         </Grid>
                                                         {
-                                                            summaries[batch.batch] !== ""
+                                                            showSummary[batch.batch] === 1
                                                                 ? <Grid item xs={16}>
                                                                     <Option key={1} elevation={0}>
-                                                                        {/* {summaries[batch.batch]} */}
-                                                                        The reply goes here - waiting for the API Keys
+                                                                        {
+                                                                            batch.summary != ""
+                                                                            ? batch.summary : "Loading..."
+                                                                        }
                                                                     </Option>
                                                                 </Grid> : <></>
                                                         }

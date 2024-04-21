@@ -50,7 +50,8 @@ export default function TweetBox(props) {
                 let new_batch = {
                     batch: pub_blocks.length === 0 ? 0 : pub_blocks[pub_blocks.length - 1].batch + 1,
                     blocks: new_pub,
-                    tweet_id: data["tweet_id"],
+                    tweet_ids: data["tweet_ids"],
+                    summary: data["summary"],
                 }
                 new_pubs.push(new_batch);
                 setPub(new_pubs);
