@@ -1,5 +1,6 @@
 import React from 'react';
 import { TwitterIcon, HomeIcon, ExploreIcon, NotificationsIcon, MessagesIcon, BookMarksIcon, ListIcon, ProfileIcon, MoreIcon } from './İcons';
+import BuildCircleIcon from '@mui/icons-material/BuildCircle';
 
 export default function SideBar() {
     return (
@@ -67,11 +68,11 @@ export default function SideBar() {
                     </button>
                     <div className="flex justify-between items-center mb-7 mt-6 hover:bg-primary-navi_hover hover:bg-opacity-70 rounded-full pl-3 pr-8 py-3 transform transition-colors duration-2">
                         <div className="h-11 w-11">
-                            <img className="rounded-full" src="https://pbs.twimg.com/profile_images/1439646648410464258/C52zZ4ff_400x400.jpg" />
+                            <img className="rounded-full" src="https://pbs.twimg.com/media/FDfHu8tVEAQAVfv?format=jpg&name=large"/>
                         </div>
                         <div className="flex flex-col">
-                            <span className="font-bold text-md text-white">AdemCan Certel</span>
-                            <span className="text-primary-profile_color text-sm">@CertelAdemcan</span>
+                            <span className="font-bold text-md text-white">Bradley Tian</span>
+                            <span className="text-primary-profile_color text-sm">@BradleyT12345</span>
                         </div>
 
                         <div className="flex space-x-1">
